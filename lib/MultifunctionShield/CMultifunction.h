@@ -1,7 +1,8 @@
 #include <arduino.h>
 #include "CMelodies.h"
+#include "CCommon.h"
 
-enum EOutput { Led1 = 10, Led2 = 11, Led3 = 12, Led4 = 13,
+enum EOutput { Led1 = 10, Led2 = 11, Led3 = 12, Led4 = 13,  //Led4 equals the Uno's built-in LED
                Buzzer = 3 };
 enum EInput { Button1 = A1, Button2 = A2, Button3 = A3,
               Input1 = 5, Input2 = 6, Input3 = 9, InfraredReceiver = 2};
@@ -23,6 +24,10 @@ public:
         pinMode(Led2, OUTPUT);
         pinMode(Led3, OUTPUT);
         pinMode(Led4, OUTPUT);
+        SetOutput(Led1, HIGH);                  //set to HIGH to avoid lightning on at start
+        SetOutput(Led2, HIGH);
+        SetOutput(Led3, HIGH);
+        SetOutput(Led4, HIGH);
 
         pinMode(Button1, INPUT_PULLUP);         //pressing any embbeded button generates LOW logic signal
         pinMode(Button2, INPUT_PULLUP);
@@ -35,6 +40,7 @@ public:
         //pinMode(Buzzer, OUTPUT);              //set by m_Melodies
         m_Melodies = new CMelodies(Buzzer);
         SetOutput(Buzzer, HIGH);                //output also negated, so set it to HIGH to avoid buzzing at start
+        Display(1000);
 
         // inputs
         //pinMode(Potentiometer, INPUT);        //= A0;
@@ -47,14 +53,17 @@ public:
     };
 
     // Public methods
-    void setup();
     void SetOutput(EOutput out, unsigned int iValue);
     int  GetInput(EInput in);
     int  GetInputPwm(EInputPwm inPwm);
     void Display(int iValue);
+
+    void StartTimeTrial();
+    void StopTimeTrial();
     void PlayMelody(EMelodies melody);
 private:
     // Private methods
     CMelodies* m_Melodies;
     void WriteNumberToSegment(byte bSegment, byte bValue);
+    bool m_bTimeTrialRun;
 };

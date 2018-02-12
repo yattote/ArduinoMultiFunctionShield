@@ -14,6 +14,9 @@ void setup() {
 	// Configure hisThread
 	hisThread.onRun(ProcessLeds);
 	hisThread.setInterval(500);
+
+    // Serial.begin(9600);
+    // Serial.println("Debugging Multifunction Shield");
 }
 
 void loop() {
@@ -22,5 +25,6 @@ void loop() {
     //control.run();
 
     ProcessMelodies();
-    ProcessLeds();
+    //ProcessLeds();
+    //ProcessDisplay();
 }

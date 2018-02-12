@@ -29,6 +29,25 @@ void CMultifunction::Display(int iValue)
     WriteNumberToSegment(3 , iValue % 10);
 }
 
+void CMultifunction::StartTimeTrial()
+{
+    m_bTimeTrialRun = true;
+    int i = 0;
+    while (m_bTimeTrialRun)
+    {
+        Display(i);
+        Common.Sleep(SLEEP_250MS);
+        i += 25;
+        if (i == 1000)
+            i = 0;
+    }
+}
+
+void CMultifunction::StopTimeTrial()
+{
+    m_bTimeTrialRun = false;
+}
+
 void CMultifunction::PlayMelody(EMelodies melody)
 {
     m_Melodies->PlayMelody(melody);

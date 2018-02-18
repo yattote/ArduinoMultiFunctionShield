@@ -1,8 +1,5 @@
 #include "CMultifunction.h"
 
-const byte SEGMENT_MAP[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0X80, 0X90};    // Segment byte maps for numbers 0 to 9
-const byte SEGMENT_SELECT[] = {0xF1, 0xF2, 0xF4, 0xF8}; // Byte maps to select digit 1 to 4
-
 #pragma region Public methods
 
 void CMultifunction::SetOutput(EOutput out, unsigned int iValue)
@@ -20,13 +17,27 @@ int CMultifunction::GetInputPwm(EInputPwm inPwm)
     return analogRead(inPwm);
 }
 
-void CMultifunction::Display(int iValue)
+void CMultifunction::DisplayNumber(int iValue)
 {
     //TODO: allow floats so decimals are allowed
-    WriteNumberToSegment(0 , iValue / 1000);
-    WriteNumberToSegment(1 , (iValue / 100) % 10);
-    WriteNumberToSegment(2 , (iValue / 10) % 10);
+    if (iValue / 1000)
+    {
+        WriteNumberToSegment(0 , iValue / 1000);
+    }
+    if ((iValue / 100) % 10)
+    {
+        WriteNumberToSegment(1 , (iValue / 100) % 10);
+    }
+    if ((iValue / 10) % 10)
+    {
+        WriteNumberToSegment(2 , (iValue / 10) % 10);
+    }
     WriteNumberToSegment(3 , iValue % 10);
+}
+
+void CMultifunction::DisplayChar(char cValue)
+{
+    AsciiToSegmentValue(cValue);
 }
 
 void CMultifunction::StartTimeTrial()
@@ -35,7 +46,7 @@ void CMultifunction::StartTimeTrial()
     int i = 0;
     while (m_bTimeTrialRun)
     {
-        Display(i);
+        DisplayNumber(i);
         Common.Sleep(SLEEP_250MS);
         i += 25;
         if (i == 1000)
@@ -62,5 +73,34 @@ void CMultifunction::WriteNumberToSegment(byte bSegment, byte bValue)
     digitalWrite(DISPLAY_LATCH, LOW);
     shiftOut(DISPLAY_DATA, DISPLAY_CLOCK, MSBFIRST, SEGMENT_MAP[bValue]);
     shiftOut(DISPLAY_DATA, DISPLAY_CLOCK, MSBFIRST, SEGMENT_SELECT[bSegment]);
+    digitalWrite(DISPLAY_LATCH, HIGH);
+}
+
+void CMultifunction::AsciiToSegmentValue(byte bAscii)
+{
+    digitalWrite(DISPLAY_LATCH, LOW);
+    if (bAscii >= 'A' && bAscii <='Z')
+    {
+        shiftOut(DISPLAY_DATA, DISPLAY_CLOCK, MSBFIRST, SEGMENT_MAP_CHARS[bAscii - 'A']);
+        shiftOut(DISPLAY_DATA, DISPLAY_CLOCK, MSBFIRST, SEGMENT_SELECT[3]); //TODO: segment
+    }
+    // else
+    // {
+    //     switch (bAscii)
+    //     {
+    //         case '-':
+    //             segmentValue = 191;
+    //             break;
+    //         case '.':
+    //             segmentValue = 127;
+    //             break;
+    //         case '_':
+    //             segmentValue = 247;
+    //             break;
+    //         case ' ':
+    //             segmentValue = 255;
+    //             break;
+    //     }
+    // }
     digitalWrite(DISPLAY_LATCH, HIGH);
 }

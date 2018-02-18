@@ -1,28 +1,21 @@
 #include "CMultifunction.h"
-#include "Thread.h"
-#include "StaticThreadController.h"
 
 CMultifunction m_multifunction;
-Thread* myThread;                                           //The Thread (as a pointer) with justCallback initialized
-Thread  hisThread;
-StaticThreadController<2> control (myThread, &hisThread);   //StaticThreadController that will control all threads
 
 void ProcessMelodies()
 {
     if (m_multifunction.GetInput(Button1) == LOW)
     {
-//Serial.println("Button 1 pressed");
-        //m_multifunction.PlayMelody(Fanfarria);
+        m_multifunction.PlayMelody(R2D2_2);
     }
     else if (m_multifunction.GetInput(Button2) == LOW)
     {
-//Serial.println("Button 2 pressed");
-        //m_multifunction.PlayMelody(DogPower);
+        m_multifunction.PlayMelody(Ohhh2);
     }
     else if (m_multifunction.GetInput(Button3) == LOW)
     {
-//Serial.println("Button 3 pressed");
-        m_multifunction.StartTimeTrial();
+        m_multifunction.PlayMelody(Catcall);
+        // m_multifunction.StartTimeTrial();
     }
 }
 
@@ -42,9 +35,15 @@ void ProcessLeds()
 
 void ProcessDisplay()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 10; i++)
     {
-        m_multifunction.Display(i);
-        Common.Sleep(SLEEP_1S);
+        m_multifunction.DisplayNumber(i);
+        Common.Sleep(SLEEP_250MS);
+    }
+
+    for (int i = 0; i < 26; i++)
+    {
+        m_multifunction.DisplayChar(0x41 + i);    //'A' = 0x41
+        Common.Sleep(SLEEP_250MS);
     }
 }

@@ -15,7 +15,7 @@ Software project in Visual Studio Code + Platformio-IDE for Arduino Uno with the
 ## Code source structure
 
 ** Dependencies: ** Needs to have access to RemoteControlledCar_VSCode/lib in this same repository
-
+```
 ArduinoMultifunctionShield
 |--lib
 |  |--MultifunctionShield
@@ -28,5 +28,4 @@ ArduinoMultifunctionShield
 RemoteControlledCar_VSCode
 |--lib
 |  |--RCCLib_Melodies
-|--external-libs
-|  |--ArduinoThread
+```

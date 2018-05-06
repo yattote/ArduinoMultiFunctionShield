@@ -6,15 +6,15 @@ void ProcessMelodies()
 {
     if (m_multifunction.GetInput(Button1) == LOW)
     {
-        m_multifunction.PlayMelody(R2D2_2);
+        m_multifunction.PlayMelody(EMelodies::R2D2_2);
     }
     else if (m_multifunction.GetInput(Button2) == LOW)
     {
-        m_multifunction.PlayMelody(Ohhh2);
+        m_multifunction.PlayMelody(EMelodies::Ohhh2);
     }
     else if (m_multifunction.GetInput(Button3) == LOW)
     {
-        m_multifunction.PlayMelody(Catcall);
+        m_multifunction.PlayMelody(EMelodies::Catcall);
         // m_multifunction.StartTimeTrial();
     }
 }

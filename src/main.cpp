@@ -1,13 +1,15 @@
 #include "main.h"
 
-void setup() {
+void setup()
+{
     m_multifunction = CMultifunction();
 
     // Serial.begin(9600);
     // Serial.println("Debugging Multifunction Shield");
 }
 
-void loop() {
+void loop()
+{
     ProcessMelodies();
     //ProcessLeds();
     //ProcessDisplay();

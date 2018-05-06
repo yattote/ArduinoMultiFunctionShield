@@ -2,8 +2,7 @@
 
 Software project in Visual Studio Code + Platformio-IDE for Arduino Uno with the Multi-Function shield
 
-
-<img src="multi-function-shield.jpg" width="30%" alt="Image">
+<img src="doc/img/multi-function-shield.jpg" width="20%" alt="Multi-Shield">
 
 ## Features
 - Displays 4 digit values
@@ -14,7 +13,7 @@ Software project in Visual Studio Code + Platformio-IDE for Arduino Uno with the
 
 ## Code source structure
 
-** Dependencies: ** Needs to have access to RemoteControlledCar_VSCode/lib in this same repository
+**Dependencies**: Needs to have access to _Generic-Libraries/lib_ in this same repository
 ```
 ArduinoMultifunctionShield
 |--lib
@@ -25,7 +24,8 @@ ArduinoMultifunctionShield
 |  |- main.cpp
 |  |- main.h
 |- platformio.ini
-RemoteControlledCar_VSCode
+Generic-Libraries
 |--lib
-|  |--RCCLib_Melodies
+|  |--Melodies_Lib
+|  |--Common_Lib
 ```
